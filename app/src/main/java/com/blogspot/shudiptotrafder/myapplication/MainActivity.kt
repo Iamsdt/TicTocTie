@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Want to Play again", Snackbar.LENGTH_LONG)
                     .setAction("Recreate",{recreate()}).show()
@@ -175,9 +176,8 @@ class MainActivity : AppCompatActivity() {
         if (winner != -1) {
 
             if (winner == 1) {
-
             } else {
-                
+
             }
         }
     }

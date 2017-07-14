@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="Player 1: 1"
-            android:id="@+id/player1"
+            android:id="@+id/tv_player1"
             android:textColor="@color/player1"
             android:textSize="20sp"
             android:textAllCaps="false"
@@ -33,7 +33,7 @@
             android:textStyle="bold"
             android:textColor="@color/player2"
             android:textSize="20sp"
-            android:id="@+id/player2"
+            android:id="@+id/tv_player2"
             android:layout_marginStart="20dp"/>
 
     </TableRow>
