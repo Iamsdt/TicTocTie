@@ -19,7 +19,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Player 1: 1"
+            android:text="@string/player1"
             android:id="@+id/tv_player1"
             android:textColor="@color/player1"
             android:textSize="20sp"
@@ -29,7 +29,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Player 2: 1"
+            android:text="@string/player2"
             android:textStyle="bold"
             android:textColor="@color/player2"
             android:textSize="20sp"

@@ -1,6 +1,5 @@
 package com.blogspot.shudiptotrafder.myapplication
 
-import android.graphics.Color
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
@@ -15,11 +14,28 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
+
+    private var pointP1 = 0
+    private var pointP2 = 0
+
+    //saved instance key
+    private var pointP1Key = "p1"
+    private var pointP2Key = "p2"
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        if (savedInstanceState != null){
+
+            pointP1 = savedInstanceState.getInt(pointP1Key,0)
+            pointP2 = savedInstanceState.getInt(pointP2Key,0)
+
+            tv_player1.text = "Player 1:$pointP1"
+            tv_player2.text = "Player 2:$pointP2"
+        }
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Want to Play again", Snackbar.LENGTH_LONG)
@@ -67,14 +83,14 @@ class MainActivity : AppCompatActivity() {
 
         if (ActivePlayer == 1) {
             buSelected.text = "X"
-            buSelected.setBackgroundColor(Color.CYAN)
+            buSelected.setBackgroundResource(R.color.player1)
             player1.add(cellID)
             ActivePlayer = 2
             autoPlay()
 
         } else {
             buSelected.text = "O"
-            buSelected.setBackgroundColor(Color.MAGENTA)
+            buSelected.setBackgroundResource(R.color.player2)
             player2.add(cellID)
             ActivePlayer = 1
 
@@ -176,9 +192,24 @@ class MainActivity : AppCompatActivity() {
         if (winner != -1) {
 
             if (winner == 1) {
-            } else {
 
+                pointP1 += 1
+                tv_player1.text = "Player 1:$pointP1"
+                Snackbar.make(container,"player 1 win",Snackbar.LENGTH_SHORT).show()
+            } else {
+                pointP2 += 1
+                tv_player2.text = "Player 2:$pointP2"
+                Snackbar.make(container,"player 1 win",Snackbar.LENGTH_SHORT).show()
             }
+
+            val b = Bundle()
+            b.putInt(pointP1Key,pointP1)
+            b.putInt(pointP2Key,pointP2)
+
+            if (!b.isEmpty){
+                recreate()
+            }
+
         }
     }
 
