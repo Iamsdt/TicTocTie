@@ -28,6 +28,8 @@ class MainActivity : AppCompatActivity() {
     val spName = "sp"
     var pref: SharedPreferences? = null
 
+    var increment = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -101,12 +103,8 @@ class MainActivity : AppCompatActivity() {
 
         }
 
-        if (buSelected.isEnabled) {
-            checkWinner()
-        }
-
         buSelected.isEnabled = false
-
+        checkWinner()
 
     }
 
@@ -201,6 +199,10 @@ class MainActivity : AppCompatActivity() {
 
         if (winner != -1) {
 
+            if (increment){
+                return
+            }
+
             if (winner == 1) {
                 pointP1 += 1
                 tv_player1.text = "Player 1:$pointP1"
@@ -216,8 +218,16 @@ class MainActivity : AppCompatActivity() {
             editor.putInt(pointP2Key,pointP2)
             editor.apply()
 
-            //recreate()
+            increment = true
+            recreate()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        val edit = pref!!.edit()
+        edit.clear()
+        edit.apply()
     }
 
     fun autoPlay() {
