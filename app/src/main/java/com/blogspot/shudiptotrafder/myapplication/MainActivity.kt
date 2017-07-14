@@ -1,5 +1,7 @@
 package com.blogspot.shudiptotrafder.myapplication
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
@@ -23,23 +25,26 @@ class MainActivity : AppCompatActivity() {
     private var pointP2Key = "p2"
 
 
+    val spName = "sp"
+    var pref: SharedPreferences? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        if (savedInstanceState != null){
+        pref = getSharedPreferences(spName, Context.MODE_PRIVATE)
 
-            pointP1 = savedInstanceState.getInt(pointP1Key,0)
-            pointP2 = savedInstanceState.getInt(pointP2Key,0)
+        pointP1 = pref!!.getInt(pointP1Key, 0)
+        pointP2 = pref!!.getInt(pointP2Key, 0)
 
-            tv_player1.text = "Player 1:$pointP1"
-            tv_player2.text = "Player 2:$pointP2"
-        }
+        tv_player1.text = "Player 1:$pointP1"
+        tv_player2.text = "Player 2:$pointP2"
+
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Want to Play again", Snackbar.LENGTH_LONG)
-                    .setAction("Recreate",{recreate()}).show()
+                    .setAction("Recreate", { recreate() }).show()
         }
     }
 
@@ -77,7 +82,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun playGame(cellID: Int, buSelected: Button) {
 
-        if (!buSelected.isEnabled){
+        if (!buSelected.isEnabled) {
             return
         }
 
@@ -96,12 +101,17 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+        if (buSelected.isEnabled) {
+            checkWinner()
+        }
+
         buSelected.isEnabled = false
 
-        checkWinner()
+
     }
 
     private fun checkWinner() {
+
         var winner = -1
 
         //row 1
@@ -192,24 +202,21 @@ class MainActivity : AppCompatActivity() {
         if (winner != -1) {
 
             if (winner == 1) {
-
                 pointP1 += 1
                 tv_player1.text = "Player 1:$pointP1"
-                Snackbar.make(container,"player 1 win",Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(container, "player 1 win", Snackbar.LENGTH_SHORT).show()
             } else {
                 pointP2 += 1
                 tv_player2.text = "Player 2:$pointP2"
-                Snackbar.make(container,"player 1 win",Snackbar.LENGTH_SHORT).show()
+                Snackbar.make(container, "player 1 win", Snackbar.LENGTH_SHORT).show()
             }
 
-            val b = Bundle()
-            b.putInt(pointP1Key,pointP1)
-            b.putInt(pointP2Key,pointP2)
+            val editor = pref!!.edit()
+            editor.putInt(pointP1Key,pointP1)
+            editor.putInt(pointP2Key,pointP2)
+            editor.apply()
 
-            if (!b.isEmpty){
-                recreate()
-            }
-
+            //recreate()
         }
     }
 
@@ -218,24 +225,24 @@ class MainActivity : AppCompatActivity() {
         //first device have to find empty cell
         val emptyCell = ArrayList<Int>()
 
-        for ( cellID in 1..9){
+        for (cellID in 1..9) {
 
-            if(!( player1.contains(cellID) || player2.contains(cellID))) {
+            if (!(player1.contains(cellID) || player2.contains(cellID))) {
                 emptyCell.add(cellID)
             }
         }
 
         val random = Random()
-        val randIndex:Int
+        val randIndex: Int
 
         var cellID = 0
 
         try {
-            randIndex = random.nextInt(emptyCell.size-0)+0
+            randIndex = random.nextInt(emptyCell.size - 0) + 0
             cellID = emptyCell[randIndex]
-        } catch (e:Exception){
+        } catch (e: Exception) {
             e.printStackTrace()
-            Log.e("Random",e.message)
+            Log.e("Random", e.message)
         }
 
         val buttonSelected: Button?
