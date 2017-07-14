@@ -116,90 +116,92 @@ class MainActivity : AppCompatActivity() {
         //player 1
         if (player1.contains(1) && player1.contains(2) && player1.contains(3)) {
             winner = 1
-        }
 
-        //player 2
-        if (player2.contains(1) && player2.contains(2) && player2.contains(3)) {
+        } else if (player2.contains(1) && player2.contains(2) && player2.contains(3)) {
+            //player2
             winner = 2
         }
 
         //row 2
         //player 1
-        if (player1.contains(4) && player1.contains(5) && player1.contains(6)) {
+        else if (player1.contains(4) && player1.contains(5) && player1.contains(6)) {
             winner = 1
         }
 
         //player 2
-        if (player2.contains(4) && player2.contains(5) && player2.contains(6)) {
+        else if (player2.contains(4) && player2.contains(5) && player2.contains(6)) {
             winner = 2
         }
 
         //row 3
         //player 1
-        if (player1.contains(7) && player1.contains(8) && player1.contains(9)) {
+        else if (player1.contains(7) && player1.contains(8) && player1.contains(9)) {
             winner = 1
         }
 
         //player 2
-        if (player2.contains(7) && player2.contains(8) && player2.contains(9)) {
+        else if (player2.contains(7) && player2.contains(8) && player2.contains(9)) {
             winner = 2
         }
 
         //col 1
         //player 1
-        if (player1.contains(1) && player1.contains(4) && player1.contains(7)) {
+        else if (player1.contains(1) && player1.contains(4) && player1.contains(7)) {
             winner = 1
         }
 
         //player 2
-        if (player2.contains(1) && player2.contains(4) && player2.contains(7)) {
+        else if (player2.contains(1) && player2.contains(4) && player2.contains(7)) {
             winner = 2
         }
 
         //col 2
         //player 1
-        if (player1.contains(2) && player1.contains(5) && player1.contains(8)) {
+        else if (player1.contains(2) && player1.contains(5) && player1.contains(8)) {
             winner = 1
         }
 
         //player 2
-        if (player2.contains(2) && player2.contains(5) && player2.contains(8)) {
+        else if (player2.contains(2) && player2.contains(5) && player2.contains(8)) {
             winner = 2
         }
 
         //col 3
         //player 1
-        if (player1.contains(3) && player1.contains(6) && player1.contains(9)) {
+        else if (player1.contains(3) && player1.contains(6) && player1.contains(9)) {
             winner = 1
         }
 
         //player 2
-        if (player2.contains(3) && player2.contains(6) && player2.contains(9)) {
+        else if (player2.contains(3) && player2.contains(6) && player2.contains(9)) {
             winner = 2
         }
 
         //cross connection
-        if (player1.contains(1) && player1.contains(5) && player1.contains(9)) {
+        else if (player1.contains(1) && player1.contains(5) && player1.contains(9)) {
             winner = 1
         }
 
         //player 2
-        if (player2.contains(1) && player2.contains(5) && player2.contains(9)) {
+        else if (player2.contains(1) && player2.contains(5) && player2.contains(9)) {
             winner = 2
         }
 
-        if (player1.contains(3) && player1.contains(5) && player1.contains(7)) {
+        //player 1
+        else if (player1.contains(3) && player1.contains(5) && player1.contains(7)) {
             winner = 1
         }
 
         //player 2
-        if (player2.contains(3) && player2.contains(5) && player2.contains(7)) {
+        else if (player2.contains(3) && player2.contains(5) && player2.contains(7)) {
             winner = 2
         }
+
+
 
         if (winner != -1) {
 
-            if (increment){
+            if (increment) {
                 return
             }
 
@@ -207,20 +209,70 @@ class MainActivity : AppCompatActivity() {
                 pointP1 += 1
                 tv_player1.text = "Player 1:$pointP1"
                 Snackbar.make(container, "player 1 win", Snackbar.LENGTH_SHORT).show()
-            } else {
+                btnClear()
+            } else if (winner == 2) {
                 pointP2 += 1
                 tv_player2.text = "Player 2:$pointP2"
                 Snackbar.make(container, "player 1 win", Snackbar.LENGTH_SHORT).show()
+                btnClear()
+
             }
 
             val editor = pref!!.edit()
-            editor.putInt(pointP1Key,pointP1)
-            editor.putInt(pointP2Key,pointP2)
+            editor.putInt(pointP1Key, pointP1)
+            editor.putInt(pointP2Key, pointP2)
             editor.apply()
 
             increment = true
-            recreate()
         }
+    }
+
+    private fun btnClear(){
+
+        //set increment to false so that it can be increment again
+        increment = false
+
+        //clear all saved data
+        player1.clear()
+        player2.clear()
+        //set active palyer to 1
+        ActivePlayer = 1
+
+        bu1.isEnabled = true
+        bu1.setBackgroundResource(R.color.btnBcg)
+        bu1.text = ""
+
+        bu2.isEnabled = true
+        bu2.setBackgroundResource(R.color.btnBcg)
+        bu2.text = ""
+
+        bu3.isEnabled = true
+        bu3.setBackgroundResource(R.color.btnBcg)
+        bu3.text = ""
+
+        bu4.isEnabled = true
+        bu4.setBackgroundResource(R.color.btnBcg)
+        bu4.text = ""
+
+        bu5.isEnabled = true
+        bu5.setBackgroundResource(R.color.btnBcg)
+        bu5.text = ""
+
+        bu6.isEnabled = true
+        bu6.setBackgroundResource(R.color.btnBcg)
+        bu6.text = ""
+
+        bu7.isEnabled = true
+        bu7.setBackgroundResource(R.color.btnBcg)
+        bu7.text = ""
+
+        bu8.isEnabled = true
+        bu8.setBackgroundResource(R.color.btnBcg)
+        bu8.text = ""
+
+        bu9.isEnabled = true
+        bu9.setBackgroundResource(R.color.btnBcg)
+        bu9.text = ""
     }
 
     override fun onDestroy() {
